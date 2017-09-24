@@ -14,5 +14,8 @@
     "@types/express": "^4.0.37",
     "gulp": "^3.9.1",
     "typescript": "^2.5.2"
+  },
+  "scripts": {
+    "start": "node ./app/startup.js --harmony"
   }
 }
