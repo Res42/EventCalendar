@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calendar</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="list.html">Calendar</a>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <a href="create.html" class="btn btn-primary">Új esemény</a>
+                <a href="user.html" class="btn">Felhasználói adatok</a>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kezdet</th>
+                    <th>Vége</th>
+                    <th>Név</th>
+                    <th>Helyszín</th>
+                    <th>További résztvevők</th>
+                    <th>Megjegyzés</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2017-09-18</td>
+                    <td>2017-09-18</td>
+                    <td>Hétfői napot túlélni</td>
+                    <td>Mindenhol</td>
+                    <td>-</td>
+                    <td>Lorem ipsum</td>
+                    <td>
+                        <a href="create.html" class="btn btn-primary">Módosítás</a>
+                        <button class="btn btn-outline-danger">Törlés</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2017-09-21 12:00</td>
+                    <td>2017-09-23 18:00</td>
+                    <td>Valami</td>
+                    <td>Valahol</td>
+                    <td>
+                        <ul>
+                            <li>Kutya</li>
+                            <li>Macska</li>
+                        </ul>
+                    </td>
+                    <td>Lorem ipsum</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Jelenlét">
+                            <button type="button" class="btn btn-success active">Ott leszek</button>
+                            <button type="button" class="btn btn-secondary">Talán</button>
+                            <button type="button" class="btn btn-secondary">Nem leszek ott</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
