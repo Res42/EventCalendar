@@ -15,14 +15,14 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="list.html">Calendar</a>
+        <a class="navbar-brand" href="/">Calendar</a>
     </nav>
 
     <div class="container">
         <div class="row mb-4">
             <div class="col-12">
-                <a href="create.html" class="btn btn-primary">Új esemény</a>
-                <a href="user.html" class="btn">Felhasználói adatok</a>
+                <a href="/event" class="btn btn-primary">Új esemény</a>
+                <a href="/user/me" class="btn">Felhasználói adatok</a>
             </div>
         </div>
 
@@ -47,7 +47,8 @@
                     <td>-</td>
                     <td>Lorem ipsum</td>
                     <td>
-                        <a href="create.html" class="btn btn-primary">Módosítás</a>
+                        <!-- TODO set eventId -->
+                        <a href="/event/1" class="btn btn-primary">Módosítás</a>
                         <button class="btn btn-outline-danger">Törlés</button>
                     </td>
                 </tr>
