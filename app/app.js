@@ -12,6 +12,7 @@ const login_router_1 = require("./routes/login-router");
 const register_router_1 = require("./routes/register-router");
 const password_reset_router_1 = require("./routes/password-reset-router");
 const app = express();
+// Global middlewares
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +22,7 @@ app.use(session({
     saveUninitialized: false,
     secret: "kutya",
 }));
+// Routes
 app.use("/", home_router_1.default);
 app.use("/login", login_router_1.default);
 app.use("/register", register_router_1.default);

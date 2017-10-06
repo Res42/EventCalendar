@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "outDir": "app",
     "rootDir": "src",
