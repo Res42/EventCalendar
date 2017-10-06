@@ -1,5 +1,3 @@
-"use strict";
-
 import * as express from "express";
 import render from "../middlewares/render-middleware";
 import redirect from "../middlewares/redirect-middleware";

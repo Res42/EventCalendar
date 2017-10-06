@@ -1,6 +1,5 @@
 import { IEvent } from "../typings/i-event";
 
-
 const eventDb: IEvent[] = [
     {
         id: 1,

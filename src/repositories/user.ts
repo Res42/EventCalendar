@@ -1,6 +1,5 @@
 import { IUser } from "../typings/i-user";
 
-
 const userDb: IUser[] = [
     {
         id: 1,

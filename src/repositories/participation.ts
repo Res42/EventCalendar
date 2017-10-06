@@ -1,7 +1,6 @@
 import { IParticipation } from "../typings/i-participation";
 import { ParticipationState } from "../enumerations";
 
-
 const participationDb: IParticipation[] = [
     {
         eventId: 1,
