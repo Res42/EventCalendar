@@ -1,0 +1,1 @@
+{"version":3,"file":"render-middleware.js","sourceRoot":"","sources":["../../src/middlewares/render-middleware.ts"],"names":[],"mappings":";;AACA,6BAA6B;AAM7B,gBAA+B,QAAgB;IAC3C,MAAM,CAAC,UAAU,GAAoB,EAAE,GAAqB;QAIxD,MAAM,CAAC,GAAG,CAAC,QAAQ,CAAC,QAAQ,EAAE,EAAE,IAAI,EAAE,IAAI,CAAC,IAAI,CAAC,SAAS,EAAE,UAAU,CAAC,EAAE,CAAC,CAAC;IAC9E,CAAC,CAAC;AACN,CAAC;AAPD,yBAOC;AAAA,CAAC"}

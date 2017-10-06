@@ -1,17 +1,30 @@
 "use strict";
 
 import * as express from "express";
+import render from "../middlewares/render-middleware";
+import authenticated from "../middlewares/authenticated-middleware";
+import getCurrentUser from "../middlewares/user/get-current-user-middleware";
+import createUpdateUser from "../middlewares/user/create-update-user-middleware";
+import redirect from "../middlewares/redirect-middleware";
 
 const router = express.Router();
 
-// GET current user form
-router.get("/:userId", (req, res, next) => {
+// Global middlewares for this router.
+router.use(
+    authenticated(),
+);
 
-});
+// GET current user form
+router.get("/me",
+    getCurrentUser(),
+    render("user.html"),
+);
 
 // POST current user form
-router.post("/:userId", (req, res, next) => {
-
-});
+router.post("/me",
+    getCurrentUser(),
+    createUpdateUser(),
+    redirect("/"),
+);
 
 export default router;
