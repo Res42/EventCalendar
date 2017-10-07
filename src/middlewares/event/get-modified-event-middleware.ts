@@ -5,6 +5,7 @@ import eventDb from "../../repositories/event";
  * Checks if a user can modify an event.
  * - If the user can modify it -> save the event to res.locals.model;
  * - If the user cannot modify it -> 403;
+ * - If there is no event with the given eventId -> 404;
  */
 export default function getModifiedEvent() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {

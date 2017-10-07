@@ -5,6 +5,7 @@ const event_1 = require("../../repositories/event");
  * Checks if a user can modify an event.
  * - If the user can modify it -> save the event to res.locals.model;
  * - If the user cannot modify it -> 403;
+ * - If there is no event with the given eventId -> 404;
  */
 function getModifiedEvent() {
     return function (req, res, next) {

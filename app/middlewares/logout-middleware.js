@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Logsoutin the current user.
+ * Logs out the current user.
  */
 function logout() {
     return function (req, res, next) {

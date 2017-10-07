@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Logs in the user from the request data.
+ * If no user is found with the given username and password -> 404.
  */
 function login() {
     return function (req, res, next) {

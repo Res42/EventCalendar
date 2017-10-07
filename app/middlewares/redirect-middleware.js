@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Redirects to the specified path,
+ * Redirects to the specified path.
  */
 function redirect(path) {
     return function (req, res) {

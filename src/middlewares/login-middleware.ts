@@ -2,6 +2,7 @@ import * as express from "express";
 
 /**
  * Logs in the user from the request data.
+ * If no user is found with the given username and password -> 404.
  */
 export default function login() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {

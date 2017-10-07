@@ -1,7 +1,7 @@
 import * as express from "express";
 
 /**
- * Logsoutin the current user.
+ * Logs out the current user.
  */
 export default function logout() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {

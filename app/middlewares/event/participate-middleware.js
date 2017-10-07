@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Checks if a user can participate in an event.
- * If the user can aprticipate -> set participation from request data.
+ * If the user can participate -> set participation from request data.
  * If the user cannot participate -> 403.
+ * If there is no event with the given eventId -> 404.
  */
 function participate() {
     return function (req, res, next) {
