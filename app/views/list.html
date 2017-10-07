@@ -16,6 +16,18 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <a class="navbar-brand" href="/">Calendar</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+
+            <form action="/logout" method="POST" class="form-inline">
+              <button class="btn btn-link" type="submit">Kijelentkezés</button>
+            </form>
+          </div>
     </nav>
 
     <div class="container">
@@ -47,8 +59,9 @@
                     <td>-</td>
                     <td>Lorem ipsum</td>
                     <td>
-                        <!-- TODO set eventId -->
+                        <!-- TODO: set eventId -->
                         <a href="/event/1" class="btn btn-primary">Módosítás</a>
+                        <!-- TODO: add click handler here to DELETE /event/{eventId} -->
                         <button class="btn btn-outline-danger">Törlés</button>
                     </td>
                 </tr>
@@ -65,10 +78,20 @@
                     </td>
                     <td>Lorem ipsum</td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="Jelenlét">
-                            <button type="button" class="btn btn-success active">Ott leszek</button>
-                            <button type="button" class="btn btn-secondary">Talán</button>
-                            <button type="button" class="btn btn-secondary">Nem leszek ott</button>
+                        <div class="d-flex" aria-label="Jelenlét">
+                            <!-- TODO: set eventId -->
+                            <form action="/event/1/status" method="POST" class="">
+                                <input type="hidden" name="participationStatus" value="3">
+                                <button class="btn btn-success active" type="submit">Ott leszek</button>
+                            </form>
+                            <form action="/event/1/status" method="POST" class="ml-1">
+                                <input type="hidden" name="participationStatus" value="2">
+                                <button class="btn btn btn-secondary" type="submit">Talán</button>
+                            </form>
+                            <form action="/event/1/status" method="POST" class="ml-1">
+                                <input type="hidden" name="participationStatus" value="1">
+                                <button class="btn btn-secondary" type="submit">Nem leszek ott</button>
+                            </form>
                         </div>
                     </td>
                 </tr>
