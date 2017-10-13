@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
+const path = require("path");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -13,9 +14,10 @@ const register_router_1 = require("./routes/register-router");
 const password_reset_router_1 = require("./routes/password-reset-router");
 const app = express();
 // Global middlewares
+app.use("/styles", express.static(path.join(__dirname, "styles")));
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
     resave: false,

@@ -7,4 +7,9 @@ gulp.task("copy-html", function () {
         .pipe(gulp.dest("./app/views"));
 });
 
-gulp.task("default", ["copy-html"]);
+gulp.task("copy-css", function () {
+    return gulp.src("./src/styles/**/*")
+        .pipe(gulp.dest("./app/styles"));
+});
+
+gulp.task("default", ["copy-html", "copy-css"]);
