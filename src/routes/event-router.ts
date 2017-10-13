@@ -10,9 +10,9 @@ import deleteEvent from "../middlewares/event/delete-event-middleware";
 const router = express.Router();
 
 // Global middlewares for this router.
-// router.use(
-//     authenticated(),
-// );
+router.use(
+    authenticated(),
+);
 
 // GET create event form
 router.get("/",

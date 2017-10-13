@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const render_middleware_1 = require("../middlewares/render-middleware");
+const authenticated_middleware_1 = require("../middlewares/authenticated-middleware");
 const get_modified_event_middleware_1 = require("../middlewares/event/get-modified-event-middleware");
 const participate_middleware_1 = require("../middlewares/event/participate-middleware");
 const redirect_middleware_1 = require("../middlewares/redirect-middleware");
@@ -9,9 +10,7 @@ const create_update_event_middleware_1 = require("../middlewares/event/create-up
 const delete_event_middleware_1 = require("../middlewares/event/delete-event-middleware");
 const router = express.Router();
 // Global middlewares for this router.
-// router.use(
-//     authenticated(),
-// );
+router.use(authenticated_middleware_1.default());
 // GET create event form
 router.get("/", render_middleware_1.default("create.html"));
 // POST create event form
