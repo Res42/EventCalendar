@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function resetPassword() {
     return function (req, res, next) {
+        // TODO
         return next();
     };
 }

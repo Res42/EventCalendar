@@ -4,6 +4,7 @@ import authenticated from "../middlewares/authenticated-middleware";
 import listEvents from "../middlewares/event/list-events-middleware";
 import logout from "../middlewares/logout-middleware";
 import redirect from "../middlewares/redirect-middleware";
+import listUsers from "../middlewares/user/list-users-middleware";
 
 const router = express.Router();
 
@@ -17,8 +18,9 @@ const router = express.Router();
 // GET event list
 router.get("/",
     authenticated(),
+    listUsers(),
     listEvents(),
-    render("list.html"),
+    render("list"),
 );
 
 // POST logout

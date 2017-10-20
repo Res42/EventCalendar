@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function login() {
     return function (req, res, next) {
-        // TODO check the user from db.
+        // TODO: check the user from db.
         req.session.userId = 1;
         req.session.authenticated = true;
         req.session.save((err) => {

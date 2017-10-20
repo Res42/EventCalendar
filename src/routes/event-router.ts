@@ -6,6 +6,7 @@ import participate from "../middlewares/event/participate-middleware";
 import redirect from "../middlewares/redirect-middleware";
 import createUpdateEvent from "../middlewares/event/create-update-event-middleware";
 import deleteEvent from "../middlewares/event/delete-event-middleware";
+import listUsers from "../middlewares/user/list-users-middleware";
 
 const router = express.Router();
 
@@ -16,7 +17,8 @@ router.use(
 
 // GET create event form
 router.get("/",
-    render("create.html"),
+    listUsers(),
+    render("create"),
 );
 
 // POST create event form
@@ -27,8 +29,9 @@ router.post("/",
 
 // GET modify event form
 router.get("/:eventId",
+    listUsers(),
     getModifiedEvent(),
-    render("create.html"),
+    render("create"),
 );
 
 // POST modify event form

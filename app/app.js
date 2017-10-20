@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const expressLayouts = require("express-ejs-layouts");
 const home_router_1 = require("./routes/home-router");
 const event_router_1 = require("./routes/event-router");
 const user_router_1 = require("./routes/user-router");
@@ -13,6 +14,11 @@ const login_router_1 = require("./routes/login-router");
 const register_router_1 = require("./routes/register-router");
 const password_reset_router_1 = require("./routes/password-reset-router");
 const app = express();
+// View engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(expressLayouts);
+app.set("layout extractScripts", true);
 // Global middlewares
 app.use("/styles", express.static(path.join(__dirname, "styles")));
 app.use(helmet());

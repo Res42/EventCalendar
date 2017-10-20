@@ -48,7 +48,7 @@ span.twitter-typeahead .show.tt-menu {
   display: block; }
 
 span.twitter-typeahead {
-  display: block !important; }
+  width: 100%; }
   span.twitter-typeahead .tt-suggestion.tt-cursor {
     cursor: pointer; }
   .input-group span.twitter-typeahead {

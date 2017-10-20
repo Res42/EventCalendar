@@ -7,7 +7,7 @@ const router = express.Router();
 
 // GET register form
 router.get("/",
-    render("register.html"),
+    render("register"),
 );
 
 // POST register form

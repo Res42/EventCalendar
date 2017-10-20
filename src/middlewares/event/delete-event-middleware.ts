@@ -5,6 +5,7 @@ import * as express from "express";
  */
 export default function deleteEvent() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
+        // TODO
         return next();
     };
 };

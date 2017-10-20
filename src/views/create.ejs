@@ -1,0 +1,115 @@
+<form method="POST">
+    <% if (typeof model !== "undefined") { %>
+        <h2>Esemény szerkesztése</h2>
+    <% } else { %>
+        <h2>Új esemény létrehozása</h2>
+    <% } %>
+ 
+    <div class="form-group row">
+        <label for="eventName" class="col-2 col-form-label">Név</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="eventName" name="eventName" required <% if (typeof model !== "undefined") { %> value="<%= model.name %>" <% } %>>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="eventStart" class="col-2 col-form-label">Kezdet</label>
+        <div class="col-10">
+            <input type="datetime-local" class="form-control" id="eventStart" name="eventStart" required <% if (typeof model !== "undefined") { %> value="<%= model.from %>" <% } %>>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="eventEnd" class="col-2 col-form-label">Vége</label>
+        <div class="col-10">
+            <input type="datetime-local" class="form-control" id="eventEnd" name="eventEnd" required <% if (typeof model !== "undefined") { %> value="<%= model.to %>" <% } %>>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="eventLocation" class="col-2 col-form-label">Helyszín</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="eventLocation" name="eventLocation" <% if (typeof model !== "undefined") { %> value="<%= model.location %>" <% } %>>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="eventComment" class="col-2 col-form-label">Megjegyzés</label>
+        <div class="col-10">
+            <textarea class="form-control" id="eventComment" rows="4" <% if (typeof model !== "undefined") { %> value="<%= model.comment %>" <% } %>></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="eventParticipants" class="col-2 col-form-label">Résztvevők</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="eventAddParticipants" autocomplete="off">
+
+            <ul id="participants">
+                <% if (typeof model !== "undefined") { %>
+                    <% for (var i = 0; i < model.participants.length; i++) { %>
+                        <li>
+                            <input type="hidden" name="participants[]" value="<%= model.participants[i].id %>">
+                            <span><%= model.participants[i].name %></span>
+                            <span class="fa fa-remove text-danger" onclick="removeLine(this)" title="Résztvevő eltávolítása"></span>
+                        </li>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Mentés</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    var userList = <%- JSON.stringify(locals.users.filter(function(i) { return !model.participants.find(function(p) { return i.id == p.id }); })) %>;
+    var selectedList = <%- JSON.stringify(model.participants) %>;
+
+    var users = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace("name"),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            identify: function(obj) { return obj.id; },
+            local: userList,
+        });
+
+    function removeLine(element) {
+        var id = element.parentElement.querySelector("input").value;
+        var removed = selectedList.find(function(s) { return s.id == id; });
+        selectedList = selectedList.filter(function(s) { return s.id != id; });
+        userList.push(removed);
+        users.clear();
+        users.add(userList);
+
+        element.parentElement.remove();
+    };
+
+    $(function() {
+        $("#eventAddParticipants").typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        }, {
+            name: "users",
+            display: "name",
+            source: users
+        }).bind("typeahead:select", function(event, selected) {
+            $(this).typeahead("val", "");
+            selectedList.push(selected);
+            userList = userList.filter(function(u) { return u.id != selected.id; });
+            users.clear();
+            users.add(userList);
+            $("#participants").append(
+                '<li>\n' +
+                '<input type="hidden" name="participants[]" value="' + selected.id + '">\n' +
+                '<span>' + selected.name + '</span>\n' +
+                '<span class="fa fa-remove text-danger" onclick="removeLine(this)" title="Résztvevő eltávolítása"></span>\n' +
+                '</li>'
+            );
+        });
+    });
+</script>

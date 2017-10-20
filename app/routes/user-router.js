@@ -10,7 +10,7 @@ const router = express.Router();
 // Global middlewares for this router.
 router.use(authenticated_middleware_1.default());
 // GET current user form
-router.get("/me", get_current_user_middleware_1.default(), render_middleware_1.default("user.html"));
+router.get("/me", get_current_user_middleware_1.default(), render_middleware_1.default("user"));
 // POST current user form
 router.post("/me", get_current_user_middleware_1.default(), create_update_user_middleware_1.default(), redirect_middleware_1.default("/"));
 exports.default = router;

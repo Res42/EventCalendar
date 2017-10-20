@@ -7,7 +7,7 @@ const router = express.Router();
 
 // GET login form
 router.get("/",
-    render("login.html"),
+    render("login"),
 );
 
 // POST login form

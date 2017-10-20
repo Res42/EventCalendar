@@ -8,7 +8,7 @@ const eventDb = [
         location: "Mindenhol",
         from: new Date(),
         to: new Date(),
-        comment: "",
+        comment: "comment",
         participants: [2],
     },
 ];

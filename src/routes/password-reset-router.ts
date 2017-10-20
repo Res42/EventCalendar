@@ -9,7 +9,7 @@ const router = express.Router();
 
 // GET password reset request form
 router.get("/",
-    render("password-reset-request.html"),
+    render("password-reset-request"),
 );
 
 // POST password reset request form
@@ -20,7 +20,7 @@ router.post("/",
 
 // GET password reset form
 router.get("/:token",
-    render("password-reset.html"),
+    render("password-reset"),
 );
 
 // POST password reset form

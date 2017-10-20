@@ -15,7 +15,7 @@ router.use(
 // GET current user form
 router.get("/me",
     getCurrentUser(),
-    render("user.html"),
+    render("user"),
 );
 
 // POST current user form

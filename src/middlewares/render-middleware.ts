@@ -2,14 +2,15 @@ import * as express from "express";
 import * as path from "path";
 
 /**
- * Renders the html file.
- * @param viewPath The html file's path.
+ * Renders the ejs file.
+ * @param viewPath The ejs file's name / path starting from the views folder.
  */
 export default function render(viewPath: string) {
     return function (req: express.Request, res: express.Response) {
-        // TODO: change this to ejs in the 4th homework
-        // use res.locals.model to populate the template with the data.
-        // let model = res.locals.model;
-        return res.sendFile(viewPath, { root: path.join(__dirname, "../views") });
+        return res.render(viewPath, {
+            model: res.locals.model,
+            isAuthenticated: !!req.session.authenticated,
+            currentUserId: req.session.userId
+        });
     };
 };

@@ -1,0 +1,72 @@
+<div class="row mb-4">
+    <div class="col-12">
+        <a href="/event" class="btn btn-primary">Új esemény</a>
+        <a href="/user/me" class="btn">Felhasználói adatok</a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kezdet</th>
+            <th>Vége</th>
+            <th>Név</th>
+            <th>Helyszín</th>
+            <th>További résztvevők</th>
+            <th>Megjegyzés</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (var i = 0; i < model.length; i++) { %>
+            <tr>
+                <td><%= model[i].from %></td>
+                <td><%= model[i].to %></td>
+                <td><%= model[i].name %></td>
+                <td><%= model[i].location %></td>
+                <td>
+                    <ul>
+                        <% for (var j = 0; j < model[i].participants.length; j++) { %>
+                            <li><%= model[i].participants[j].name %></li>
+                        <% } %>
+                    </ul>
+                </td>
+                <td><%= model[i].comment %></td>
+                <td>
+                    <% if (model[i].ownerId === currentUserId) { %>
+                        <a href="/event/<%= model[i].id %>" class="btn btn-primary">Módosítás</a>
+                        <button class="btn btn-outline-danger" onclick="deleteEvent(this, '<%= model[i].id %>')">Törlés</button>
+                    <% } else { %>
+                        <div class="d-flex" aria-label="Jelenlét">
+                                <!-- TODO: get status from db to set "active" class -->
+                                <form action="/event/<%= model[i].id %>/status" method="POST">
+                                    <input type="hidden" name="participationStatus" value="3">
+                                    <button class="btn btn-success active" type="submit">Ott leszek</button>
+                                </form>
+                                <form action="/event/<%= model[i].id %>/status" method="POST" class="ml-1">
+                                    <input type="hidden" name="participationStatus" value="2">
+                                    <button class="btn btn btn-secondary" type="submit">Talán</button>
+                                </form>
+                                <form action="/event/<%= model[i].id %>/status" method="POST" class="ml-1">
+                                    <input type="hidden" name="participationStatus" value="1">
+                                    <button class="btn btn-secondary" type="submit">Nem leszek ott</button>
+                                </form>
+                            </div>
+                    <% } %>
+                </td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<script>
+    function deleteEvent(element, eventId) {
+        $.ajax({
+            url: "/event/" + eventId,
+            type: "DELETE",
+            success: function(result) {
+                $(element).closest("tr").remove();
+            }
+        });
+    }
+</script>
