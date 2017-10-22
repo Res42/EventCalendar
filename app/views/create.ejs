@@ -67,8 +67,13 @@
 </form>
 
 <script>
-    var userList = <%- JSON.stringify(locals.users.filter(function(i) { return !model.participants.find(function(p) { return i.id == p.id }); })) %>;
-    var selectedList = <%- JSON.stringify(model.participants) %>;
+    <% if (typeof model !== "undefined") { %>
+        var userList = <%- JSON.stringify(locals.users.filter(function(i) { return !model.participants.find(function(p) { return i.id == p.id }); })) %>;
+        var selectedList = <%- JSON.stringify(model.participants) %>;
+    <% } else { %>
+        var userList = <%- JSON.stringify(locals.users) %>;
+        var selectedList = [];
+    <% } %>
 
     var users = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace("name"),
@@ -92,7 +97,7 @@
         $("#eventAddParticipants").typeahead({
             hint: true,
             highlight: true,
-            minLength: 1
+            minLength: 0
         }, {
             name: "users",
             display: "name",
