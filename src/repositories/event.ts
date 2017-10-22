@@ -1,16 +1,19 @@
 import { IEvent } from "../typings/i-event";
+import * as mongoose from "mongoose";
 
-const eventDb: IEvent[] = [
-    {
-        id: 1,
-        ownerId: 1,
-        name: "Teszt event 1",
-        location: "Mindenhol",
-        from: new Date(),
-        to: new Date(),
-        comment: "comment",
-        participants: [2],
-    },
-];
+interface EventEntity extends IEvent, mongoose.Document {}
 
-export default eventDb;
+let eventSchema = new mongoose.Schema({
+    name: String,
+    from: Date,
+    to: Date,
+    location: String,
+    comment: String,
+
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
+});
+
+let EventDb = mongoose.model<EventEntity>("EventCalendar", eventSchema, "Event");
+
+export { EventEntity, EventDb };

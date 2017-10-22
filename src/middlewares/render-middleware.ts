@@ -10,7 +10,7 @@ export default function render(viewPath: string) {
         return res.render(viewPath, {
             model: res.locals.model,
             isAuthenticated: !!req.session.authenticated,
-            currentUserId: req.session.userId
+            currentUserId: req.session.userId,
         });
     };
 };
