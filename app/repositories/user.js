@@ -1,26 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const userDb = [
-    {
-        id: 1,
-        username: "kutya",
-        displayName: "kutya",
-        emailAddress: "kutya@kutya.kutya",
-        eventsIds: [1],
-        participationIds: [],
-        password: "kutya",
-        passwordResetToken: null,
-    },
-    {
-        id: 2,
-        username: "kutya2",
-        displayName: "kutya2",
-        emailAddress: "kutya2@kutya.kutya",
-        eventsIds: [],
-        participationIds: [1],
-        password: "kutya2",
-        passwordResetToken: null,
-    },
-];
-exports.default = userDb;
+const mongoose = require("mongoose");
+let userSchema = new mongoose.Schema({
+    userName: { type: String, unique: true },
+    displayName: String,
+    emailAddress: { type: String, unique: true },
+    password: String,
+    passwordResetToken: String,
+    events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    participations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
+});
+let UserDb = mongoose.model("EventCalendar", userSchema, "User");
+exports.UserDb = UserDb;
 //# sourceMappingURL=user.js.map

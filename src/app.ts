@@ -5,6 +5,7 @@ import * as cookieParser from "cookie-parser";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
 import * as expressLayouts from "express-ejs-layouts";
+import * as mongoose from "mongoose";
 import homeRouter from "./routes/home-router";
 import eventRouter from "./routes/event-router";
 import userRouter from "./routes/user-router";
@@ -13,6 +14,17 @@ import registerRouter from "./routes/register-router";
 import passwordResetRouter from "./routes/password-reset-router";
 
 const app = express();
+
+// Database
+mongoose.connect("mongodb://localhost/EventCalendar", {
+    useMongoClient: true,
+}).then(
+    () => console.log("Connected to MongoDB"),
+    (err) => {
+        console.log(err.message);
+        console.log(err);
+    }
+);
 
 // View engine
 app.set("view engine", "ejs");

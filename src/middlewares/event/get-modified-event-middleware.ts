@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as moment from "moment";
-import eventDb from "../../repositories/event";
+import { EventDb } from "../../repositories/event";
 
 /**
  * Checks if a user can modify an event.
@@ -11,22 +11,22 @@ import eventDb from "../../repositories/event";
 export default function getModifiedEvent() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
         // TODO: db
-        let event = eventDb.find((e) => e.id === parseInt(req.params.eventId, 10));
+        // let event = eventDb.find((e) => e.id === parseInt(req.params.eventId, 10));
 
-        if (!event) {
-            return res.status(404).end();
-        }
+        // if (!event) {
+        //     return res.status(404).end();
+        // }
 
-        if (event.ownerId !== req.session.userId) {
-            return res.status(403).end();
-        }
+        // if (event.ownerId !== req.session.userId) {
+        //     return res.status(403).end();
+        // }
 
-        res.locals.model = {
-            ...event,
-            from: moment(event.from).format("YYYY-MM-DDTHH:mm"),
-            to: moment(event.to).format("YYYY-MM-DDTHH:mm"),
-            participants: res.locals.users ? event.participants.map(id => res.locals.users.find(u => u.id === id)) : event.participants,
-        };
+        // res.locals.model = {
+        //     ...event,
+        //     from: moment(event.from).format("YYYY-MM-DDTHH:mm"),
+        //     to: moment(event.to).format("YYYY-MM-DDTHH:mm"),
+        //     participants: res.locals.users ? event.participants.map(id => res.locals.users.find(u => u.id === id)) : event.participants,
+        // };
 
         return next();
     };

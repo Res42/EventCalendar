@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
+const mongoose = require("mongoose");
 const home_router_1 = require("./routes/home-router");
 const event_router_1 = require("./routes/event-router");
 const user_router_1 = require("./routes/user-router");
@@ -14,6 +15,13 @@ const login_router_1 = require("./routes/login-router");
 const register_router_1 = require("./routes/register-router");
 const password_reset_router_1 = require("./routes/password-reset-router");
 const app = express();
+// Database
+mongoose.connect("mongodb://localhost/EventCalendar", {
+    useMongoClient: true,
+}).then(() => console.log("Connected to MongoDB"), (err) => {
+    console.log(err.message);
+    console.log(err);
+});
 // View engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

@@ -1,16 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const eventDb = [
-    {
-        id: 1,
-        ownerId: 1,
-        name: "Teszt event 1",
-        location: "Mindenhol",
-        from: new Date(),
-        to: new Date(),
-        comment: "comment",
-        participants: [2],
-    },
-];
-exports.default = eventDb;
+const mongoose = require("mongoose");
+let eventSchema = new mongoose.Schema({
+    name: String,
+    from: Date,
+    to: Date,
+    location: String,
+    comment: String,
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
+});
+let EventDb = mongoose.model("EventCalendar", eventSchema, "Event");
+exports.EventDb = EventDb;
 //# sourceMappingURL=event.js.map

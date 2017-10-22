@@ -1,4 +1,5 @@
 import * as express from "express";
+import { UserDb } from "../repositories/user";
 
 /**
  * Logs in the user from the request data.
