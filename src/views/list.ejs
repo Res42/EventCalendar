@@ -33,7 +33,7 @@
                 </td>
                 <td><%= model[i].comment %></td>
                 <td>
-                    <% if (model[i].ownerId === currentUserId) { %>
+                    <% if (model[i].owner.id === currentUserId) { %>
                         <a href="/event/<%= model[i].id %>" class="btn btn-primary">Módosítás</a>
                         <button class="btn btn-outline-danger" onclick="deleteEvent(this, '<%= model[i].id %>')">Törlés</button>
                     <% } else { %>
