@@ -6,8 +6,14 @@ import { UserDb } from "../../repositories/user";
  */
 export default function getCurrentUser() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        // TODO: db
-        // res.locals.model = userDb.find(u => u.id === req.session.userId);
-        return next();
+        UserDb.findById(req.session.userId)
+            .exec((err, result) => {
+                if (err) {
+                    return next(err);
+                }
+
+                res.locals.model = result;
+                return next();
+            });
     };
 };

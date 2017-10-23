@@ -7,15 +7,22 @@ import { UserDb } from "../repositories/user";
  */
 export default function login() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        // TODO: check the user from db.
-        req.session.userId = 1;
-        req.session.authenticated = true;
-        req.session.save((err) => {
-            if (err) {
-                return next(err);
-            }
+        UserDb.findOne({ userName: req.body.userName, password: req.body.userPassword})
+            .exec((err, result) => {
+                if (err) {
+                    return res.status(404).end();
+                }
 
-            return next();
-        });
+                req.session.userId = result._id;
+                req.session.authenticated = true;
+
+                req.session.save((saveErr) => {
+                    if (saveErr) {
+                        return next(saveErr);
+                    }
+
+                    return next();
+                });
+            });
     };
 };

@@ -17,7 +17,6 @@ const user_1 = require("../../repositories/user");
 function createUpdateUser() {
     return function (req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
-            // TODO
             if (req.body.userPassword !== req.body.userPasswordAgain) {
                 return next(new Error("Given passwords does not match."));
             }
@@ -36,6 +35,7 @@ function createUpdateUser() {
             else {
                 return next();
             }
+            // TODO: update
         });
     };
 }

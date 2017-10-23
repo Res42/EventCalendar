@@ -1,6 +1,9 @@
 import * as express from "express";
 import * as moment from "moment";
+import * as mongoose from "mongoose";
 import { EventDb } from "../../repositories/event";
+import { formatUser } from "../user/list-users-middleware";
+import { IUser } from "../../typings/i-user";
 
 /**
  * Lists the current users events which are currently happening or will be happening in the future.
@@ -8,18 +11,36 @@ import { EventDb } from "../../repositories/event";
  */
 export default function listEvents() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        // TODO: db
-        // res.locals.model = eventDb
-        //     // TODO: only show currently happening or future events
-        //     .filter(e => e.ownerId === req.session.userId || e.participants.some(p => p === req.session.userId))
-        //     .map(e => {
-        //         return {
-        //             ...e,
-        //             from: moment(e.from).format("YYYY-MM-DD HH:mm"),
-        //             to: moment(e.to).format("YYYY-MM-DD HH:mm"),
-        //             participants: res.locals.users ? e.participants.map(id => res.locals.users.find(u => u.id === id)) : e.participants,
-        //         };
-        //     });
-        return next();
+        let now = moment().utc().toDate();
+        EventDb.find({
+            $and: [{
+                $or: [{ owner: req.session.userId }, { participants: { _id: req.session.userId } }],
+            }, {
+                $or: [{ from: { $gt: now } }, { to: { $gt: now } }],
+            }],
+        })
+        .populate("owner")
+        .populate("participants")
+        .exec((err, result) => {
+            if (err) {
+                return next(err);
+            }
+
+            res.locals.model = result
+                .map(e => {
+                    return {
+                        name: e.name,
+                        location: e.location,
+                        comment: e.comment,
+                        from: moment(e.from).format("YYYY-MM-DD HH:mm"),
+                        to: moment(e.to).format("YYYY-MM-DD HH:mm"),
+                        owner: formatUser(e.owner as IUser),
+                        participants: e.participants || [],
+                    };
+                });
+
+            return next();
+        });
+
     };
 };

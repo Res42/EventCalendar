@@ -14,6 +14,6 @@ let eventSchema = new mongoose.Schema({
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
 });
 
-let EventDb = mongoose.model<EventEntity>("EventCalendar", eventSchema, "Event");
+let EventDb = mongoose.model<EventEntity>("Event", eventSchema, "Event");
 
 export { EventEntity, EventDb };

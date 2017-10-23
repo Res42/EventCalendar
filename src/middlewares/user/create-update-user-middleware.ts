@@ -9,7 +9,7 @@ import { IUser } from "../../typings/i-user";
  */
 export default function createUpdateUser() {
     return async function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        // TODO
+
         if (req.body.userPassword !== req.body.userPasswordAgain) {
             return next(new Error("Given passwords does not match."));
         }
@@ -28,5 +28,7 @@ export default function createUpdateUser() {
         } else {
             return next();
         }
+
+        // TODO: update
     };
 };
