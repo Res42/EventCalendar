@@ -10,6 +10,6 @@ let eventSchema = new mongoose.Schema({
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
 });
-let EventDb = mongoose.model("EventCalendar", eventSchema, "Event");
+let EventDb = mongoose.model("Event", eventSchema, "Event");
 exports.EventDb = EventDb;
 //# sourceMappingURL=event.js.map

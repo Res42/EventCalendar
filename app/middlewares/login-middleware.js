@@ -1,19 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const user_1 = require("../repositories/user");
 /**
  * Logs in the user from the request data.
  * If no user is found with the given username and password -> 404.
  */
 function login() {
     return function (req, res, next) {
-        // TODO: check the user from db.
-        req.session.userId = 1;
-        req.session.authenticated = true;
-        req.session.save((err) => {
+        user_1.UserDb.findOne({ userName: req.body.userName, password: req.body.userPassword })
+            .exec((err, result) => {
             if (err) {
-                return next(err);
+                return res.status(404).end();
             }
-            return next();
+            req.session.userId = result._id;
+            req.session.authenticated = true;
+            req.session.save((saveErr) => {
+                if (saveErr) {
+                    return next(saveErr);
+                }
+                return next();
+            });
         });
     };
 }

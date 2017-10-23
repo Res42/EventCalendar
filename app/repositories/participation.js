@@ -7,6 +7,6 @@ let participationSchema = new mongoose.Schema({
     state: Number,
 });
 participationSchema.index({ user: 1, event: 1 }, { unique: true });
-let ParticipationDb = mongoose.model("EventCalendar", participationSchema, "Participation");
+let ParticipationDb = mongoose.model("Participation", participationSchema, "Participation");
 exports.ParticipationDb = ParticipationDb;
 //# sourceMappingURL=participation.js.map

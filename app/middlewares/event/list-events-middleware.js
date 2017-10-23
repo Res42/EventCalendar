@@ -1,24 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const moment = require("moment");
+const event_1 = require("../../repositories/event");
+const list_users_middleware_1 = require("../user/list-users-middleware");
 /**
  * Lists the current users events which are currently happening or will be happening in the future.
  * Saves the list in res.locals.model.
  */
 function listEvents() {
     return function (req, res, next) {
-        // TODO: db
-        // res.locals.model = eventDb
-        //     // TODO: only show currently happening or future events
-        //     .filter(e => e.ownerId === req.session.userId || e.participants.some(p => p === req.session.userId))
-        //     .map(e => {
-        //         return {
-        //             ...e,
-        //             from: moment(e.from).format("YYYY-MM-DD HH:mm"),
-        //             to: moment(e.to).format("YYYY-MM-DD HH:mm"),
-        //             participants: res.locals.users ? e.participants.map(id => res.locals.users.find(u => u.id === id)) : e.participants,
-        //         };
-        //     });
-        return next();
+        let now = moment().utc().toDate();
+        event_1.EventDb.find({
+            $and: [{
+                    $or: [{ owner: req.session.userId }, { participants: { _id: req.session.userId } }],
+                }, {
+                    $or: [{ from: { $gt: now } }, { to: { $gt: now } }],
+                }],
+        })
+            .populate("owner")
+            .populate("participants")
+            .exec((err, result) => {
+            if (err) {
+                return next(err);
+            }
+            res.locals.model = result
+                .map(e => {
+                return {
+                    name: e.name,
+                    location: e.location,
+                    comment: e.comment,
+                    from: moment(e.from).format("YYYY-MM-DD HH:mm"),
+                    to: moment(e.to).format("YYYY-MM-DD HH:mm"),
+                    owner: list_users_middleware_1.formatUser(e.owner),
+                    participants: e.participants || [],
+                };
+            });
+            return next();
+        });
     };
 }
 exports.default = listEvents;

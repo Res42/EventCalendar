@@ -14,6 +14,6 @@ let participationSchema = new mongoose.Schema({
 participationSchema.index({ user: 1, event: 1 }, { unique: true });
 
 
-let ParticipationDb = mongoose.model<ParticipationEntity>("EventCalendar", participationSchema, "Participation");
+let ParticipationDb = mongoose.model<ParticipationEntity>("Participation", participationSchema, "Participation");
 
 export { ParticipationEntity, ParticipationDb };

@@ -6,6 +6,9 @@ import * as bodyParser from "body-parser";
 import * as session from "express-session";
 import * as expressLayouts from "express-ejs-layouts";
 import * as mongoose from "mongoose";
+import { UserDb } from "./repositories/user";
+import { EventDb } from "./repositories/event";
+import { ParticipationDb } from "./repositories/participation";
 import homeRouter from "./routes/home-router";
 import eventRouter from "./routes/event-router";
 import userRouter from "./routes/user-router";
@@ -19,12 +22,15 @@ const app = express();
 mongoose.connect("mongodb://localhost/EventCalendar", {
     useMongoClient: true,
 }).then(
-    () => console.log("Connected to MongoDB"),
+    () => {
+        console.log("Connected to MongoDB");
+        // force create this collection
+        ParticipationDb.find({}).exec();
+    },
     (err) => {
         console.log(err.message);
         console.log(err);
-    }
-);
+    });
 
 // View engine
 app.set("view engine", "ejs");
