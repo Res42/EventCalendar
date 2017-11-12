@@ -11,6 +11,7 @@ export default function render(viewPath: string) {
             model: res.locals.model,
             isAuthenticated: !!req.session.authenticated,
             currentUserId: req.session.userId,
+            currentDisplayName: req.session.displayName,
         });
     };
 };

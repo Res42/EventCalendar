@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose = require("mongoose");
-const participation_1 = require("../../repositories/participation");
+const event_1 = require("../../repositories/event");
 /**
  * Checks if a user can participate in an event.
  * If the user can participate -> set participation from request data.
@@ -10,7 +9,8 @@ const participation_1 = require("../../repositories/participation");
  */
 function participate() {
     return function (req, res, next) {
-        participation_1.ParticipationDb.findOneAndUpdate({ user: new mongoose.Types.ObjectId(req.session.userId), event: new mongoose.Types.ObjectId(req.params.eventId) }, { state: req.body.participationStatus }).exec((err, result) => {
+        event_1.EventDb.findOneAndUpdate({ _id: req.params.eventId, "participants.user": req.session.userId }, { "participants.$.state": req.body.participationStatus })
+            .exec((err, result) => {
             if (err) {
                 return res.status(404).end();
             }

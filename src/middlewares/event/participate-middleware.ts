@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
-import { ParticipationDb } from "../../repositories/participation";
+import { EventDb } from "../../repositories/event";
 
 /**
  * Checks if a user can participate in an event.
@@ -10,10 +10,8 @@ import { ParticipationDb } from "../../repositories/participation";
  */
 export default function participate() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        ParticipationDb.findOneAndUpdate(
-                { user: new mongoose.Types.ObjectId(req.session.userId), event: new mongoose.Types.ObjectId(req.params.eventId)},
-                { state: req.body.participationStatus },
-            ).exec((err, result) => {
+        EventDb.findOneAndUpdate({ _id: req.params.eventId, "participants.user": req.session.userId }, { "participants.$.state": req.body.participationStatus })
+            .exec((err, result) => {
                 if (err) {
                     return res.status(404).end();
                 }

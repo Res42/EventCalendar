@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
-const participation_1 = require("./repositories/participation");
 const home_router_1 = require("./routes/home-router");
 const event_router_1 = require("./routes/event-router");
 const user_router_1 = require("./routes/user-router");
@@ -21,8 +20,6 @@ mongoose.connect("mongodb://localhost/EventCalendar", {
     useMongoClient: true,
 }).then(() => {
     console.log("Connected to MongoDB");
-    // force create this collection
-    participation_1.ParticipationDb.find({}).exec();
 }, (err) => {
     console.log(err.message);
     console.log(err);

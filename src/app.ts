@@ -8,7 +8,6 @@ import * as expressLayouts from "express-ejs-layouts";
 import * as mongoose from "mongoose";
 import { UserDb } from "./repositories/user";
 import { EventDb } from "./repositories/event";
-import { ParticipationDb } from "./repositories/participation";
 import homeRouter from "./routes/home-router";
 import eventRouter from "./routes/event-router";
 import userRouter from "./routes/user-router";
@@ -24,8 +23,6 @@ mongoose.connect("mongodb://localhost/EventCalendar", {
 }).then(
     () => {
         console.log("Connected to MongoDB");
-        // force create this collection
-        ParticipationDb.find({}).exec();
     },
     (err) => {
         console.log(err.message);

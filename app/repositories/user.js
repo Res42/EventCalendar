@@ -7,8 +7,6 @@ let userSchema = new mongoose.Schema({
     emailAddress: { type: String, unique: true },
     password: String,
     passwordResetToken: String,
-    events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
-    participations: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
 });
 let UserDb = mongoose.model("User", userSchema, "User");
 exports.UserDb = UserDb;

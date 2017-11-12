@@ -23,6 +23,6 @@ router.post("/:eventId", get_modified_event_middleware_1.default(), create_updat
 // POST change event status
 router.post("/:eventId/status", participate_middleware_1.default(), redirect_middleware_1.default("/"));
 // DELETE event
-router.delete("/:eventId", get_modified_event_middleware_1.default(), delete_event_middleware_1.default(), redirect_middleware_1.default("/"));
+router.delete("/:eventId", delete_event_middleware_1.default());
 exports.default = router;
 //# sourceMappingURL=event-router.js.map

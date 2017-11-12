@@ -49,9 +49,7 @@ router.post("/:eventId/status",
 
 // DELETE event
 router.delete("/:eventId",
-    getModifiedEvent(),
     deleteEvent(),
-    redirect("/"),
 );
 
 export default router;

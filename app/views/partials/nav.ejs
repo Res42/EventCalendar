@@ -9,8 +9,9 @@
         </ul>
 
         <% if (isAuthenticated) { %>
+            <a class="btn btn-link" href="/user/me"><%= currentDisplayName %></a>
             <form action="/logout" method="POST" class="form-inline">
-            <button class="btn btn-link" type="submit">Kijelentkezés</button>
+                <button class="btn btn-link" type="submit">Kijelentkezés</button>
             </form>
         <% } else { %>
             <a class="btn" href="/login">Bejelentkezés</a>

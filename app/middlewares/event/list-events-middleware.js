@@ -12,13 +12,13 @@ function listEvents() {
         let now = moment().utc().toDate();
         event_1.EventDb.find({
             $and: [{
-                    $or: [{ owner: req.session.userId }, { participants: { _id: req.session.userId } }],
+                    $or: [{ owner: req.session.userId }, { "participants.user": req.session.userId }],
                 }, {
                     $or: [{ from: { $gt: now } }, { to: { $gt: now } }],
                 }],
         })
             .populate("owner")
-            .populate("participants")
+            .populate("participants.user")
             .exec((err, result) => {
             if (err) {
                 return next(err);
@@ -26,13 +26,14 @@ function listEvents() {
             res.locals.model = result
                 .map(e => {
                 return {
+                    id: e.id,
                     name: e.name,
                     location: e.location,
                     comment: e.comment,
                     from: moment(e.from).format("YYYY-MM-DD HH:mm"),
                     to: moment(e.to).format("YYYY-MM-DD HH:mm"),
                     owner: list_users_middleware_1.formatUser(e.owner),
-                    participants: e.participants || [],
+                    participants: (e.participants || []).map(p => { return Object.assign({}, list_users_middleware_1.formatUser(p.user), { state: p.state }); }),
                 };
             });
             return next();

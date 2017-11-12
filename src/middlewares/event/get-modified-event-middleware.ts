@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as moment from "moment";
+import * as mongoose from "mongoose";
 import { EventDb } from "../../repositories/event";
 
 /**
@@ -10,24 +11,32 @@ import { EventDb } from "../../repositories/event";
  */
 export default function getModifiedEvent() {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        // TODO: db
-        // let event = eventDb.find((e) => e.id === parseInt(req.params.eventId, 10));
+        let users: { id: string, name: string }[] = res.locals.users;
 
-        // if (!event) {
-        //     return res.status(404).end();
-        // }
+        EventDb.findById(req.params.eventId).exec((err, event) => {
+            if (err) {
+                return next(err);
+            }
 
-        // if (event.ownerId !== req.session.userId) {
-        //     return res.status(403).end();
-        // }
+            if (!event) {
+                return res.status(404).end();
+            }
 
-        // res.locals.model = {
-        //     ...event,
-        //     from: moment(event.from).format("YYYY-MM-DDTHH:mm"),
-        //     to: moment(event.to).format("YYYY-MM-DDTHH:mm"),
-        //     participants: res.locals.users ? event.participants.map(id => res.locals.users.find(u => u.id === id)) : event.participants,
-        // };
+            if (event.owner.toString() !== req.session.userId) {
+                return res.status(403).end();
+            }
 
-        return next();
+            res.locals.model = {
+                id: event.id,
+                name: event.name,
+                from: moment(event.from).format("YYYY-MM-DDTHH:mm"),
+                to: moment(event.to).format("YYYY-MM-DDTHH:mm"),
+                location: event.location,
+                comment: event.comment,
+                participants: users ? event.participants.map(p => users.find(u => u.id === (p.user as mongoose.Types.ObjectId).toString())) : event.participants,
+            };
+
+            return next();
+        });
     };
 };

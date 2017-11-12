@@ -27,15 +27,16 @@ function createUpdateUser() {
                     // plaintext password because laziness
                     password: req.body.userPassword,
                     emailAddress: req.body.userEmail,
-                    events: [],
-                    participations: [],
                 });
                 return next();
             }
             else {
-                return next();
+                user_1.UserDb.findByIdAndUpdate(res.locals.model.id, {
+                    displayName: req.body.userDisplayName,
+                    password: req.body.userPassword,
+                    emailAddress: req.body.userEmail,
+                }).exec((err, result) => next(err));
             }
-            // TODO: update
         });
     };
 }

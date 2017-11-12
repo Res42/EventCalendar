@@ -11,7 +11,10 @@ let eventSchema = new mongoose.Schema({
     comment: String,
 
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
+    participants: [{
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        state: Number,
+    }],
 });
 
 let EventDb = mongoose.model<EventEntity>("Event", eventSchema, "Event");

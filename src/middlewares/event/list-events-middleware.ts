@@ -14,13 +14,13 @@ export default function listEvents() {
         let now = moment().utc().toDate();
         EventDb.find({
             $and: [{
-                $or: [{ owner: req.session.userId }, { participants: { _id: req.session.userId } }],
+                $or: [{ owner: req.session.userId }, { "participants.user": req.session.userId }],
             }, {
                 $or: [{ from: { $gt: now } }, { to: { $gt: now } }],
             }],
         })
         .populate("owner")
-        .populate("participants")
+        .populate("participants.user")
         .exec((err, result) => {
             if (err) {
                 return next(err);
@@ -29,13 +29,14 @@ export default function listEvents() {
             res.locals.model = result
                 .map(e => {
                     return {
+                        id: e.id,
                         name: e.name,
                         location: e.location,
                         comment: e.comment,
                         from: moment(e.from).format("YYYY-MM-DD HH:mm"),
                         to: moment(e.to).format("YYYY-MM-DD HH:mm"),
                         owner: formatUser(e.owner as IUser),
-                        participants: e.participants || [],
+                        participants: (e.participants || []).map(p => { return { ...formatUser(p.user as IUser), state: p.state }; }),
                     };
                 });
 

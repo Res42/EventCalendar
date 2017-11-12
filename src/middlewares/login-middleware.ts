@@ -1,5 +1,6 @@
 import * as express from "express";
 import { UserDb } from "../repositories/user";
+import { formatUser } from "./user/list-users-middleware";
 
 /**
  * Logs in the user from the request data.
@@ -10,11 +11,16 @@ export default function login() {
         UserDb.findOne({ userName: req.body.userName, password: req.body.userPassword})
             .exec((err, result) => {
                 if (err) {
+                    return next(err);
+                }
+
+                if (result == null) {
                     return res.status(404).end();
                 }
 
-                req.session.userId = result._id;
+                req.session.userId = result.id;
                 req.session.authenticated = true;
+                req.session.displayName = formatUser(result).name;
 
                 req.session.save((saveErr) => {
                     if (saveErr) {

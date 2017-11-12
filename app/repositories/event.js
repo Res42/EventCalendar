@@ -8,7 +8,10 @@ let eventSchema = new mongoose.Schema({
     location: String,
     comment: String,
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Participation" }],
+    participants: [{
+            user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+            state: Number,
+        }],
 });
 let EventDb = mongoose.model("Event", eventSchema, "Event");
 exports.EventDb = EventDb;

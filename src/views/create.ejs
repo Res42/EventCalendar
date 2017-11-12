@@ -36,7 +36,7 @@
     <div class="form-group row">
         <label for="eventComment" class="col-2 col-form-label">Megjegyzés</label>
         <div class="col-10">
-            <textarea class="form-control" id="eventComment" name="eventComment" rows="4" <% if (typeof model !== "undefined") { %> value="<%= model.comment %>" <% } %>></textarea>
+            <textarea class="form-control" id="eventComment" name="eventComment" rows="4"><% if (typeof model !== "undefined") { %><%= model.comment %><% } %></textarea>
         </div>
     </div>
 
@@ -97,7 +97,7 @@
         $("#eventAddParticipants").typeahead({
             hint: true,
             highlight: true,
-            minLength: 0
+            minLength: 1
         }, {
             name: "users",
             display: "name",
