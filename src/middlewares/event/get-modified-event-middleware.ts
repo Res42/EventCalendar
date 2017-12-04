@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as moment from "moment";
 import * as mongoose from "mongoose";
-import { EventDb } from "../../repositories/event";
+import { EventEntity } from "../../repositories/event";
 
 /**
  * Checks if a user can modify an event.
@@ -9,11 +9,11 @@ import { EventDb } from "../../repositories/event";
  * - If the user cannot modify it -> 403;
  * - If there is no event with the given eventId -> 404;
  */
-export default function getModifiedEvent() {
+export default function getModifiedEvent(eventDb: mongoose.Model<EventEntity>) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
         let users: { id: string, name: string }[] = res.locals.users;
 
-        EventDb.findById(req.params.eventId).exec((err, event) => {
+        eventDb.findById(req.params.eventId).exec((err, event) => {
             if (err) {
                 return next(err);
             }

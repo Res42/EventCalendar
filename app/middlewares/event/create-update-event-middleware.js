@@ -10,14 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
 const mongoose = require("mongoose");
-const event_1 = require("../../repositories/event");
 const enumerations_1 = require("../../enumerations");
 /**
  * Creates or updates an event from the request data.
  * - Creates if there is no res.locals.model;
  * - Updates if there is res.locals.model -> the model is the modified event.
  */
-function createUpdateEvent() {
+function createUpdateEvent(eventDb) {
     return function (req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             let event = {
@@ -35,11 +34,11 @@ function createUpdateEvent() {
                 }),
             };
             if (res.locals.model) {
-                event_1.EventDb.findByIdAndUpdate(req.params.eventId, event)
+                eventDb.findByIdAndUpdate(req.params.eventId, event)
                     .exec((err, result) => next(err));
             }
             else {
-                yield event_1.EventDb.create(event);
+                yield eventDb.create(event);
                 return next();
             }
         });

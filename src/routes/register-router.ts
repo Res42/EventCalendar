@@ -15,7 +15,7 @@ router.get("/",
 
 // POST register form
 router.post("/",
-    createUpdateUser(),
+    createUpdateUser(UserDb),
     login(UserDb, formatUser),
     redirect("/"),
 );

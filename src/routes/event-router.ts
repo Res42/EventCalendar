@@ -7,6 +7,8 @@ import redirect from "../middlewares/redirect-middleware";
 import createUpdateEvent from "../middlewares/event/create-update-event-middleware";
 import deleteEvent from "../middlewares/event/delete-event-middleware";
 import listUsers from "../middlewares/user/list-users-middleware";
+import { UserDb } from "../repositories/user";
+import { EventDb } from "../repositories/event";
 
 const router = express.Router();
 
@@ -17,39 +19,39 @@ router.use(
 
 // GET create event form
 router.get("/",
-    listUsers(),
+    listUsers(UserDb),
     render("create"),
 );
 
 // POST create event form
 router.post("/",
-    createUpdateEvent(),
+    createUpdateEvent(EventDb),
     redirect("/"),
 );
 
 // GET modify event form
 router.get("/:eventId",
-    listUsers(),
-    getModifiedEvent(),
+    listUsers(UserDb),
+    getModifiedEvent(EventDb),
     render("create"),
 );
 
 // POST modify event form
 router.post("/:eventId",
-    getModifiedEvent(),
-    createUpdateEvent(),
+    getModifiedEvent(EventDb),
+    createUpdateEvent(EventDb),
     redirect("/"),
 );
 
 // POST change event status
 router.post("/:eventId/status",
-    participate(),
+    participate(EventDb),
     redirect("/"),
 );
 
 // DELETE event
 router.delete("/:eventId",
-    deleteEvent(),
+    deleteEvent(EventDb),
 );
 
 export default router;

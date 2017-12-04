@@ -1,15 +1,15 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
-import { UserDb } from "../../repositories/user";
 import { IUser, IFormattedUser } from "../../typings/i-user";
+import { UserEntity } from "../../repositories/user";
 
 /**
  * Gets the users to populate the typeahead.
  * Saves them in res.locals.users.
  */
-export default function listUsers() {
+export default function listUsers(userDb: mongoose.Model<UserEntity>) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        UserDb.find({ _id: { $ne: new mongoose.Types.ObjectId(req.session.userId) }})
+        userDb.find({ _id: { $ne: new mongoose.Types.ObjectId(req.session.userId) }})
             .exec((err, result) => {
                 if (err) {
                     return next(err);

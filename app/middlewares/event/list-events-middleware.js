@@ -1,16 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-const event_1 = require("../../repositories/event");
-const list_users_middleware_1 = require("../user/list-users-middleware");
 /**
  * Lists the current users events which are currently happening or will be happening in the future.
  * Saves the list in res.locals.model.
  */
-function listEvents() {
+function listEvents(eventDb, formatUser) {
     return function (req, res, next) {
         let now = moment().utc().toDate();
-        event_1.EventDb.find({
+        eventDb.find({
             $and: [{
                     $or: [{ owner: req.session.userId }, { "participants.user": req.session.userId }],
                 }, {
@@ -32,8 +30,8 @@ function listEvents() {
                     comment: e.comment,
                     from: moment(e.from).format("YYYY-MM-DD HH:mm"),
                     to: moment(e.to).format("YYYY-MM-DD HH:mm"),
-                    owner: list_users_middleware_1.formatUser(e.owner),
-                    participants: (e.participants || []).map(p => { return Object.assign({}, list_users_middleware_1.formatUser(p.user), { state: p.state }); }),
+                    owner: formatUser(e.owner),
+                    participants: (e.participants || []).map(p => { return Object.assign({}, formatUser(p.user), { state: p.state }); }),
                 };
             });
             return next();

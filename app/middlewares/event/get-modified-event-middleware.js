@@ -1,17 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment = require("moment");
-const event_1 = require("../../repositories/event");
 /**
  * Checks if a user can modify an event.
  * - If the user can modify it -> save the event to res.locals.model;
  * - If the user cannot modify it -> 403;
  * - If there is no event with the given eventId -> 404;
  */
-function getModifiedEvent() {
+function getModifiedEvent(eventDb) {
     return function (req, res, next) {
         let users = res.locals.users;
-        event_1.EventDb.findById(req.params.eventId).exec((err, event) => {
+        eventDb.findById(req.params.eventId).exec((err, event) => {
             if (err) {
                 return next(err);
             }

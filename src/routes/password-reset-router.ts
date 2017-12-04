@@ -6,6 +6,7 @@ import redirect from "../middlewares/redirect-middleware";
 import sendPasswordResetToken from "../middlewares/user/send-reset-token-middleware";
 import { UserDb } from "../repositories/user";
 import { formatUser } from "../middlewares/user/list-users-middleware";
+import { EmailService } from "../email";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get("/",
 
 // POST password reset request form
 router.post("/",
-    sendPasswordResetToken(),
+    sendPasswordResetToken(UserDb, EmailService),
     redirect("/login"),
 );
 
@@ -27,7 +28,7 @@ router.get("/:token",
 
 // POST password reset form
 router.post("/:token",
-    resetPassword(),
+    resetPassword(UserDb),
     login(UserDb, formatUser),
     redirect("/"),
 );

@@ -1,18 +1,17 @@
 import * as express from "express";
 import * as moment from "moment";
 import * as mongoose from "mongoose";
-import { EventDb } from "../../repositories/event";
-import { formatUser } from "../user/list-users-middleware";
-import { IUser } from "../../typings/i-user";
+import { EventEntity } from "../../repositories/event";
+import { IUser, IFormattedUser } from "../../typings/i-user";
 
 /**
  * Lists the current users events which are currently happening or will be happening in the future.
  * Saves the list in res.locals.model.
  */
-export default function listEvents() {
+export default function listEvents(eventDb: mongoose.Model<EventEntity>, formatUser: (u: IUser) => IFormattedUser) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
         let now = moment().utc().toDate();
-        EventDb.find({
+        eventDb.find({
             $and: [{
                 $or: [{ owner: req.session.userId }, { "participants.user": req.session.userId }],
             }, {

@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
-import { EventDb } from "../../repositories/event";
+import { EventEntity } from "../../repositories/event";
 
 /**
  * Checks if a user can participate in an event.
@@ -8,9 +8,9 @@ import { EventDb } from "../../repositories/event";
  * If the user cannot participate -> 404.
  * If there is no event with the given eventId -> 404.
  */
-export default function participate() {
+export default function participate(eventDb: mongoose.Model<EventEntity>) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        EventDb.findOneAndUpdate({ _id: req.params.eventId, "participants.user": req.session.userId }, { "participants.$.state": req.body.participationStatus })
+        eventDb.findOneAndUpdate({ _id: req.params.eventId, "participants.user": req.session.userId }, { "participants.$.state": req.body.participationStatus })
             .exec((err, result) => {
                 if (err) {
                     return res.status(404).end();

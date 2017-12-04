@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as moment from "moment";
 import * as mongoose from "mongoose";
-import { EventDb } from "../../repositories/event";
+import { EventEntity } from "../../repositories/event";
 import { IEvent } from "../../typings/i-event";
 import { ParticipationState } from "../../enumerations";
 
@@ -10,7 +10,7 @@ import { ParticipationState } from "../../enumerations";
  * - Creates if there is no res.locals.model;
  * - Updates if there is res.locals.model -> the model is the modified event.
  */
-export default function createUpdateEvent() {
+export default function createUpdateEvent(eventDb: mongoose.Model<EventEntity>) {
     return async function (req: express.Request, res: express.Response, next: express.NextFunction) {
         let event: IEvent = {
             name: req.body.eventName,
@@ -28,10 +28,10 @@ export default function createUpdateEvent() {
         };
 
         if (res.locals.model) {
-            EventDb.findByIdAndUpdate(req.params.eventId, event)
+            eventDb.findByIdAndUpdate(req.params.eventId, event)
                 .exec((err, result) => next(err));
         } else {
-            await EventDb.create(event);
+            await eventDb.create(event);
             return next();
         }
     };

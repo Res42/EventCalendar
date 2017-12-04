@@ -1,13 +1,13 @@
 import * as express from "express";
-import { EventDb, EventEntity } from "../../repositories/event";
-import { UserDb } from "../../repositories/user";
+import * as mongoose from "mongoose";
+import { EventEntity } from "../../repositories/event";
 
 /**
  * Deletes the event by id found in res.params.eventId.
  */
-export default function deleteEvent() {
+export default function deleteEvent(eventDb: mongoose.Model<EventEntity>) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
-        EventDb.findOneAndRemove({ _id: req.params.eventId, owner: req.session.userId })
+        eventDb.findOneAndRemove({ _id: req.params.eventId, owner: req.session.userId })
         .exec((err, result) => {
             if (err) {
                 return next(err);

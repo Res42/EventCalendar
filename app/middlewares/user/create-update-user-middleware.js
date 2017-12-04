@@ -8,20 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_1 = require("../../repositories/user");
 /**
  * Creates or updates an user from the request data.
  * - Creates if there is no res.locals.model;
  * - Updates if there is res.locals.model -> the model is the modified user.
  */
-function createUpdateUser() {
+function createUpdateUser(userDb) {
     return function (req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             if (req.body.userPassword !== req.body.userPasswordAgain) {
                 return next(new Error("Given passwords does not match."));
             }
             if (!res.locals.model) {
-                yield user_1.UserDb.create({
+                yield userDb.create({
                     userName: req.body.userName,
                     displayName: req.body.userDisplayName,
                     // plaintext password because laziness
@@ -31,7 +30,7 @@ function createUpdateUser() {
                 return next();
             }
             else {
-                user_1.UserDb.findByIdAndUpdate(res.locals.model.id, {
+                userDb.findByIdAndUpdate(res.locals.model.id, {
                     displayName: req.body.userDisplayName,
                     password: req.body.userPassword,
                     emailAddress: req.body.userEmail,
