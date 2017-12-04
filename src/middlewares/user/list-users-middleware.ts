@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
 import { UserDb } from "../../repositories/user";
-import { IUser } from "../../typings/i-user";
+import { IUser, IFormattedUser } from "../../typings/i-user";
 
 /**
  * Gets the users to populate the typeahead.
@@ -22,7 +22,7 @@ export default function listUsers() {
     };
 };
 
-export function formatUser(u: IUser) {
+export function formatUser(u: IUser): IFormattedUser {
     return {
         id: u.id,
         name: `${u.displayName} (${u.userName})`,

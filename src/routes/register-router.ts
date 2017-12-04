@@ -3,6 +3,8 @@ import render from "../middlewares/render-middleware";
 import redirect from "../middlewares/redirect-middleware";
 import createUpdateUser from "../middlewares/user/create-update-user-middleware";
 import login from "../middlewares/login-middleware";
+import { UserDb } from "../repositories/user";
+import { formatUser } from "../middlewares/user/list-users-middleware";
 
 const router = express.Router();
 
@@ -14,7 +16,7 @@ router.get("/",
 // POST register form
 router.post("/",
     createUpdateUser(),
-    login(),
+    login(UserDb, formatUser),
     redirect("/"),
 );
 

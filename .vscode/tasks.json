@@ -12,6 +12,19 @@
             "type": "gulp",
             "task": "copy-html",
             "problemMatcher": []
+        },
+        {
+            "label": "mocha",
+            "type": "shell",
+            "command": "mocha",
+            "args": [
+                "'app/test'",
+                "--recursive"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ]
 }
