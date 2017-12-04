@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
  * Gets the users to populate the typeahead.
  * Saves them in res.locals.users.
  */
-function listUsers(userDb) {
+function listUsers(userDb, formatUser) {
     return function (req, res, next) {
         userDb.find({ _id: { $ne: new mongoose.Types.ObjectId(req.session.userId) } })
             .exec((err, result) => {
@@ -19,11 +19,4 @@ function listUsers(userDb) {
 }
 exports.default = listUsers;
 ;
-function formatUser(u) {
-    return {
-        id: u.id,
-        name: `${u.displayName} (${u.userName})`,
-    };
-}
-exports.formatUser = formatUser;
 //# sourceMappingURL=list-users-middleware.js.map

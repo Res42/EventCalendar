@@ -4,9 +4,10 @@ import authenticated from "../middlewares/authenticated-middleware";
 import listEvents from "../middlewares/event/list-events-middleware";
 import logout from "../middlewares/logout-middleware";
 import redirect from "../middlewares/redirect-middleware";
-import listUsers, { formatUser } from "../middlewares/user/list-users-middleware";
+import listUsers from "../middlewares/user/list-users-middleware";
 import { UserDb } from "../repositories/user";
 import { EventDb } from "../repositories/event";
+import { formatUser } from "../helpers/format-user";
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ const router = express.Router();
 // GET event list
 router.get("/",
     authenticated(),
-    listUsers(UserDb),
+    listUsers(UserDb, formatUser),
     listEvents(EventDb, formatUser),
     render("list"),
 );

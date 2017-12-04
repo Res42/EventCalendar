@@ -7,7 +7,7 @@ import { UserEntity } from "../../repositories/user";
  * Gets the users to populate the typeahead.
  * Saves them in res.locals.users.
  */
-export default function listUsers(userDb: mongoose.Model<UserEntity>) {
+export default function listUsers(userDb: mongoose.Model<UserEntity>, formatUser: (u: IUser) => IFormattedUser) {
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
         userDb.find({ _id: { $ne: new mongoose.Types.ObjectId(req.session.userId) }})
             .exec((err, result) => {
@@ -21,10 +21,3 @@ export default function listUsers(userDb: mongoose.Model<UserEntity>) {
             });
     };
 };
-
-export function formatUser(u: IUser): IFormattedUser {
-    return {
-        id: u.id,
-        name: `${u.displayName} (${u.userName})`,
-    };
-}

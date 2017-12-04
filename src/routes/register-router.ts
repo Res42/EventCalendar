@@ -4,7 +4,7 @@ import redirect from "../middlewares/redirect-middleware";
 import createUpdateUser from "../middlewares/user/create-update-user-middleware";
 import login from "../middlewares/login-middleware";
 import { UserDb } from "../repositories/user";
-import { formatUser } from "../middlewares/user/list-users-middleware";
+import { formatUser } from "../helpers/format-user";
 
 const router = express.Router();
 

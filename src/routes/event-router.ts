@@ -9,6 +9,7 @@ import deleteEvent from "../middlewares/event/delete-event-middleware";
 import listUsers from "../middlewares/user/list-users-middleware";
 import { UserDb } from "../repositories/user";
 import { EventDb } from "../repositories/event";
+import { formatUser } from "../helpers/format-user";
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.use(
 
 // GET create event form
 router.get("/",
-    listUsers(UserDb),
+    listUsers(UserDb, formatUser),
     render("create"),
 );
 
@@ -31,7 +32,7 @@ router.post("/",
 
 // GET modify event form
 router.get("/:eventId",
-    listUsers(UserDb),
+    listUsers(UserDb, formatUser),
     getModifiedEvent(EventDb),
     render("create"),
 );
