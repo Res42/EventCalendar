@@ -1,13 +1,16 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
     "removeComments": false,
     "sourceMap": true,
     "outDir": "app",
-    "rootDir": "src",
-    "watch": true
+    "rootDir": "src"
   },
+  "include": [
+    "src/**/*"    
+  ],
   "exclude":[
     "node_modules"
   ]
